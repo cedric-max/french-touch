@@ -33,7 +33,7 @@ class RegisterController extends AbstractController
 
             $user = $form->getData();
             $password = $passwordHasher->hashPassword($user, $user->getPassword());
-            dd($password);
+            $user->setPassword($password);
             $this->entityManager->persist($user);
             $this->entityManager->flush();
         }

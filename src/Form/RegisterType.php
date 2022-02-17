@@ -3,51 +3,62 @@
 namespace App\Form;
 
 use App\Entity\User;
-use Doctrine\DBAL\Types\TextType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Event\SubmitEvent;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Validator\Type\SubmitTypeValidatorExtension;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
 
 class RegisterType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('firstname',\Symfony\Component\Form\Extension\Core\Type\TextType::class,[
+            ->add('firstname', TextType::class, [
                 'label' => 'Votre prénom',
+                'constraints' => new Length(2, 2, 30),
                 'attr' => [
                     'placeholder' => 'Merci de saisir votre prénom '
                 ]
             ])
-            ->add('lastname',\Symfony\Component\Form\Extension\Core\Type\TextType::class,[
+            ->add('lastname', TextType::class, [
                 'label' => 'Votre nom',
+                'constraints' => new Length(2, 2, 30),
                 'attr' => [
                     'placeholder' => 'Merci de saisir votre nom'
                 ]
             ])
-            ->add('email',\Symfony\Component\Form\Extension\Core\Type\EmailType::class,[
+            ->add('email', EmailType::class, [
                 'label' => 'Votre e-mail',
+                'constraints' => new Length(2, 2, 60),
                 'attr' => [
                     'placeholder' => 'xxxxx@xxx.xx'
                 ]
             ])
-            ->add('password',\Symfony\Component\Form\Extension\Core\Type\RepeatedType::class,[
+            ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
-                'invalid_message'=> 'Le mot de passe et la confirmation doit être identique',
+                'constraints' => new Length(2, 2, 60),
+                'invalid_message' => 'Le mot de passe et la confirmation doit être identique',
                 'required' => true,
                 'label' => 'Votre mot de pass',
-                'first_options' => ['label'=> 'Mot de passe'],
-                'second_options' => ['label'=> 'Confimer votre mot de passe'],
+                'first_options' => ['label' => 'Mot de passe',
+                    'attr' => [
+                        'placeholder' => 'Merci de renseigner votre mot de passe'
+                    ]
+                ],
+                'second_options' => ['label' => 'Confimer votre mot de passe',
+                    'attr' => [
+                        'placeholder' => 'Merci de confirmer votre mot de passe'
+                    ]
+                ],
             ])
             ->add('submit', SubmitType::class, [
                 'label' => "S'inscrire"
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
