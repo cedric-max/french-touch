@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon compte - La French Touche{% endblock %}
+
+{% block content %}
+    <h1> Mon compte </h1>
+    <p>Bienvenue {{ app.user.firstname }} {{ app.user.lastname }}  dans votre compte.<br>C'est ici que vous allz pouvoir gerer toutes vos informations personnelles</p>
+    <hr>
+    - Modifier mon mot de passe<br>
+    - Ajouter mes adresses<br>
+    - Mes commandes<br>
+{% endblock %}
