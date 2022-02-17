@@ -36,20 +36,14 @@ class RegisterType extends AbstractType
                     'placeholder' => 'xxxxx@xxx.xx'
                 ]
             ])
-            ->add('password',\Symfony\Component\Form\Extension\Core\Type\PasswordType::class,[
+            ->add('password',\Symfony\Component\Form\Extension\Core\Type\RepeatedType::class,[
+                'type' => PasswordType::class,
+                'invalid_message'=> 'Le mot de passe et la confirmation doit être identique',
+                'required' => true,
                 'label' => 'Votre mot de pass',
-                'attr' => [
-                    'placeholder' => 'Merci de saisir votre mot de passe'
-                ]
+                'first_options' => ['label'=> 'Mot de passe'],
+                'second_options' => ['label'=> 'Confimer votre mot de passe'],
             ])
-            ->add('password_confirm',\Symfony\Component\Form\Extension\Core\Type\PasswordType::class,[
-                'label' => 'Confirmer votre mot de passe',
-                'mapped' => false,
-                'attr' => [
-                    'placeholder' => 'Merci de confirmer votre mot de passe'
-                ]
-            ])
-
             ->add('submit', SubmitType::class, [
                 'label' => "S'inscrire"
             ])
